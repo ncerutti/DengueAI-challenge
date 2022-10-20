@@ -17,6 +17,8 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 import statsmodels.api as sm
 
+import rawdata
+
 def main():
     """
     Main function of the Dengue project.
@@ -28,6 +30,7 @@ def main():
     """
 
     #Load the data
+    train_features,train_labels,test_features = rawdata.load()
 
     #Choose features
 
