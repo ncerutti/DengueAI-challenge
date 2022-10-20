@@ -1,3 +1,12 @@
+"""
+Main module of the Dengue project.
+
+Authors:
+Emanuele Roppo
+ncerutti
+OnurKerimoglu
+"""
+
 #import packages that will be needed by multiple modules
 import pandas as pd
 import numpy as np
@@ -9,6 +18,15 @@ from sklearn.model_selection import train_test_split
 import statsmodels.api as sm
 
 def main():
+    """
+    Main function of the Dengue project.
+
+    Args: none
+
+    Returns: none
+
+    """
+
     #Load the data
 
     #Choose features
