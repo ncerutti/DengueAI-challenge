@@ -1,4 +1,4 @@
 # Data
 
---- col name | type | value count | missing values | description
+| col name | type | value count | missing values | description |
 
