@@ -30,7 +30,7 @@ def main():
     """
 
     #Load the data
-    features_train,labels_train,features_test = get_data()
+    sj_train,iq_train,sj_test_features,iq_test_features = get_data()
 
     #Choose features
 
