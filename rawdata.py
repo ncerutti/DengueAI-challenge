@@ -20,17 +20,21 @@ def get_data():
 
     #load raw data
     print("Loading raw data")
-    features_train = load('data/dengue_features_train.csv',index_cols, 'features_train')
-    labels_train = load('data/dengue_labels_train.csv',index_cols, 'labels_train')
-    features_test = load('data/dengue_features_test.csv',index_cols, 'features_test')
+    
+    train_features=pd.read_csv('data/dengue_features_train.csv')
+    train_labels=pd.read_csv('data/dengue_labels_train.csv')
+    train_features=pd.merge(train_features, train_labels, on=['city', 'year','weekofyear'])
 
+    test_features=pd.read_csv('data/dengue_features_test.csv')
+
+    return train_features,test_features
+    
     #split the data into cities
-    sj_train, iq_train = split_cities(features_train.join(labels_train))
-    sj_test_features, iq_test_features = split_cities(features_test)
+    #sj_train, iq_train = split_cities(features_train.join(labels_train))
+    #sj_test_features, iq_test_features = split_cities(features_test)
 
-    return sj_train,iq_train,sj_test_features,iq_test_features
-    pass
-
+    #return sj_train,iq_train,sj_test_features,iq_test_features
+    
 def load(path,index_cols,dsetname):
 
     df = pd.read_csv(path, index_col=index_cols)
