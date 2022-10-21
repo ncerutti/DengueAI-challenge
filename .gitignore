@@ -2,3 +2,4 @@
 *.pickle
 *.png
 */submission.csv
+*/baseline_ignore.py
