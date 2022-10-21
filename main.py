@@ -59,7 +59,7 @@ def main(options, expname):
                          ('model', model)])
 
     # do the fitting and predictions
-    fit_predict_evaluate(pl,train_clean,test_clean,figname=expname) 
+    fit_predict_evaluate(pl,train_clean,test_clean,expname=expname,create_submission=True) 
 
     # save options and scores in a pickle
     #with open(expname + '.pickle', 'wb') as handle:
@@ -73,7 +73,7 @@ if __name__ == "__main__":
                'features': 'AvgTemp_Prec', 
                'preprocessing': {'num':'median', 
                                  'FE':'addlags'},
-               'model': 'LR'
+               'model': 'DTR'
                }
     #construct an expriment name based on specified options
     expname = get_expname(options)

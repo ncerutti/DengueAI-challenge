@@ -1,10 +1,9 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error 
-from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error,r2_score 
 
 def evaluate(y,yhat,figname='figure',visualize=True,):
-    R2, RMSE = calc_score(y,yhat) 
-    print (f" R2 = {R2} \n RMSE:{RMSE}")
+    R2, RMSE, MAE = calc_score(y,yhat) 
+    print (f" R2 = {R2} \n RMSE:{RMSE} \n MAE:{MAE}")
     fig, ax = plt.subplots(figsize=(6,6))
     ax.plot(y,yhat,'.')
     ax.plot([0,y.max()],[0,y.max()],'-')
@@ -13,9 +12,10 @@ def evaluate(y,yhat,figname='figure',visualize=True,):
     plt.ylabel('Predicted Sale Price')
 
     fig.savefig(figname + '.png')
-    return {'R2':R2,'RMSE':RMSE}
+    return {'R2':R2,'RMSE':RMSE,'MAE':MAE}
 
 def calc_score(y,yhat):
     R2 = r2_score(y, yhat)
     RMSE = mean_squared_error(y,yhat,squared=False)
-    return (R2,RMSE)
+    MAE = mean_absolute_error(y,yhat)
+    return (R2,RMSE,MAE)
