@@ -73,7 +73,7 @@ if __name__ == "__main__":
                'features': 'AvgTemp_Prec', 
                'preprocessing': {'num':'median', 
                                  'FE':'addlags'},
-               'model': 'DTR'
+               'model': 'RFR' #'DTR'
                }
     #construct an expriment name based on specified options
     expname = get_expname(options)
