@@ -59,12 +59,12 @@ def main(options, expname):
                          ('model', model)])
 
     # do the fitting and predictions
-    fit_predict_evaluate(pl,train_clean,test_clean,expname=expname,create_submission=True) 
+    scores = fit_predict_evaluate(pl,train_clean,test_clean,expname=expname,create_submission=True) 
 
     # save options and scores in a pickle
-    #with open(expname + '.pickle', 'wb') as handle:
-    #    pickle.dump((scores, options), handle, protocol=pickle.HIGHEST_PROTOCOL)
-    #print(f'Saved the scores and options in: {expname}.pickle/png')
+    with open(expname + '.pickle', 'wb') as handle:
+        pickle.dump((scores, options), handle, protocol=pickle.HIGHEST_PROTOCOL)
+    print(f'Saved the scores and options in: {expname}.pickle/png')
     
     return
     
