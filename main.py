@@ -59,7 +59,7 @@ def main(options, expname):
                          ('model', model)])
 
     # do the fitting and predictions
-    scores = fit_predict_evaluate(pl,train_clean,test_clean,expname=expname,create_submission=True) 
+    scores = fit_predict_evaluate(pl,train_clean,test_clean,expname=expname,crossval=True,create_submission=False) 
 
     # save options and scores in a pickle
     with open(expname + '.pickle', 'wb') as handle:
@@ -76,5 +76,6 @@ if __name__ == "__main__":
                'model': 'RFR' #'DTR'
                }
     #construct an experiment name based on current date time
-    expname = get_expname_datetime()
+    #expname = get_expname_datetime()
+    expname='test'
     main(options, expname)
