@@ -18,7 +18,7 @@ from feature_eng import preprocess #get_features
 from processors import construct_preprocessor,construct_FEprocessor
 from models import construct_model
 from FPE import fit_predict_evaluate
-from utilities import get_expname
+from utilities import get_expname_datetime
 
 def main(options, expname):
     """
@@ -75,7 +75,6 @@ if __name__ == "__main__":
                                  'FE':'addlags'},
                'model': 'RFR' #'DTR'
                }
-    #construct an expriment name based on specified options
-    expname = get_expname(options)
-
+    #construct an experiment name based on current date time
+    expname = get_expname_datetime()
     main(options, expname)
