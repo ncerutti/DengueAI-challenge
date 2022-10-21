@@ -14,7 +14,7 @@ from sklearn.pipeline import Pipeline
 
 #import functions from project modules
 from rawdata import get_data
-from feature_eng import get_features
+from feature_eng import preprocess #get_features
 from processors import construct_preprocessor,construct_FEprocessor
 from models import construct_model
 from FPE import fit_predict_evaluate
@@ -34,34 +34,37 @@ def main(options, expname):
     """
 
     #Load the data
-    sj_train,iq_train,sj_test_features,iq_test_features = get_data()
+    train_features,test_features = get_data()
 
+    #Preprocess the data
+    train_clean, test_clean = preprocess(train_features,test_features)
+    
     #Get features
-    features = get_features(options['features'])
+    #features = get_features(options['features'])
 
     #Build the preprocessor
-    preprocessor = construct_preprocessor(opt=options['preprocessing']['num'],
-                                          features2impute=features)
+    #preprocessor = construct_preprocessor(opt=options['preprocessing']['num'],
+    #                                      features2impute=features)
 
     #Build a feature engineering processor
-    FEprocessor = construct_FEprocessor(opt=options['preprocessing']['FE'],
-                                             features2eng=features)
+    #FEprocessor = construct_FEprocessor(opt=options['preprocessing']['FE'],
+    #                                         features2eng=features)
 
     #Build the model
     model = construct_model(opt=options['model'])
 
     #Build the entire pipeline
-    pl = Pipeline(steps=[('preprocessor', preprocessor),
+    pl = Pipeline(steps=[#('preprocessor', preprocessor),
                          #('featureeng', FEprocessor), #does not work
                          ('model', model)])
 
     # do the fitting and predictions
-    scores = fit_predict_evaluate(pl,sj_train,figname=expname) 
+    fit_predict_evaluate(pl,train_clean,test_clean,figname=expname) 
 
     # save options and scores in a pickle
-    with open(expname + '.pickle', 'wb') as handle:
-        pickle.dump((scores, options), handle, protocol=pickle.HIGHEST_PROTOCOL)
-    print(f'Saved the scores and options in: {expname}.pickle/png')
+    #with open(expname + '.pickle', 'wb') as handle:
+    #    pickle.dump((scores, options), handle, protocol=pickle.HIGHEST_PROTOCOL)
+    #print(f'Saved the scores and options in: {expname}.pickle/png')
     
     return
     
