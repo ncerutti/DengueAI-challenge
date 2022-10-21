@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 def construct_model(opt):
     if opt == 'LR':
-        model = LinearRegression()
+        model = LinearRegression(random_state=420)
     elif opt == 'DTR':
         model = DecisionTreeRegressor(random_state=420)
     elif opt == 'RFR':
