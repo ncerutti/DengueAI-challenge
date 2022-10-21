@@ -3,7 +3,7 @@ import pandas as pd
 This module contains functions that deal with raw data.
 """
 
-def load():
+def get_data():
     """
     Read and return the raw data.
     Args: 
@@ -12,18 +12,24 @@ def load():
     Returns:
     train_features,train_labels,test_features: all pandas dataframes
     """
+    #define the index columns
+    index_cols = [0,1,2]
 
-    print("Loading raw data...")
-    train_features = pd.read_csv('data/dengue_features_train.csv',
-                             index_col=[0,1,2])
-    print(f' loaded train_features. Shape:{train_features.shape}')                        
+    #load raw data
+    print("Loading raw data")
+    features_train = load('data/dengue_features_train.csv',index_cols, 'features_train')
+    labels_train = load('data/dengue_labels_train.csv',index_cols, 'labels_train')
+    features_test = load('data/dengue_features_test.csv',index_cols, 'features_test')
 
-    train_labels = pd.read_csv('data/dengue_labels_train.csv',
-                           index_col=[0,1,2])
-    print(f' loaded train_labels. Shape:{train_labels.shape}')
+    return features_train,labels_train,features_test
 
-    test_features = pd.read_csv('data/dengue_features_test.csv',
-                             index_col=[0,1,2])
-    print(f' loaded test_features. Shape:{test_features.shape}')
+    pass
 
-    return train_features,train_labels,test_features                  
+def load(path,index_cols,dsetname):
+
+    df = pd.read_csv(path, index_col=index_cols)
+    print(f' loaded {dsetname}. Shape:{df.shape}')                        
+
+    return df
+
+    

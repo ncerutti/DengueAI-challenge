@@ -17,7 +17,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 import statsmodels.api as sm
 
-import rawdata
+from rawdata import get_data
 
 def main():
     """
@@ -30,7 +30,7 @@ def main():
     """
 
     #Load the data
-    train_features,train_labels,test_features = rawdata.load()
+    features_train,labels_train,features_test = get_data()
 
     #Choose features
 
