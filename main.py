@@ -15,7 +15,7 @@ from sklearn.pipeline import Pipeline
 #import functions from project modules
 from rawdata import get_data
 from feature_eng import get_features
-from preprocessors import construct_preprocessor
+from processors import construct_preprocessor,construct_FEprocessor
 from models import construct_model
 from FPE import fit_predict_evaluate
 from utilities import get_expname
@@ -40,13 +40,19 @@ def main(options, expname):
     features = get_features(options['features'])
 
     #Build the preprocessor
-    preprocessor = construct_preprocessor(opt=options['preprocessing'],features2impute=features)
+    preprocessor = construct_preprocessor(opt=options['preprocessing']['num'],
+                                          features2impute=features)
+
+    #Build a feature engineering processor
+    FEprocessor = construct_FEprocessor(opt=options['preprocessing']['FE'],
+                                             features2eng=features)
 
     #Build the model
     model = construct_model(opt=options['model'])
 
     #Build the entire pipeline
     pl = Pipeline(steps=[('preprocessor', preprocessor),
+                         #('featureeng', FEprocessor), #does not work
                          ('model', model)])
 
     # do the fitting and predictions
@@ -62,7 +68,8 @@ def main(options, expname):
 if __name__ == "__main__":
     options = {#'features': 'AvgTemp_Prec_NDVI',
                'features': 'AvgTemp_Prec', 
-               'preprocessing': 'median',
+               'preprocessing': {'num':'median', 
+                                 'FE':'addlags'},
                'model': 'LR'
                }
     #construct an expriment name based on specified options

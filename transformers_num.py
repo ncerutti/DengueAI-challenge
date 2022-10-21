@@ -6,6 +6,6 @@ def get_transf_num(opt):
     if opt=='median':
         numerical_transformer = SimpleImputer(strategy='median')
     else:
-        raise(ValueError(f'preprocessor:{opt} option not defined'))
+        raise(ValueError(f'numerical transformer:{opt} option not defined'))
     
     return numerical_transformer
