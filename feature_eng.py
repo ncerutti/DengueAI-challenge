@@ -8,12 +8,8 @@ from sklearn.metrics import mean_absolute_error
 
 
 def preprocess(train_features, test_features):
-    cleaned = basic_cleaning(
-        "./data/dengue_features_train.csv",
-        "./data/dengue_labels_train.csv",
-        "./data/dengue_features_test.csv",
-    )
 
+    cleaned = basic_cleaning(train_features, test_features)
     train_data = cleaned[0]
     test_data = cleaned[1].copy()
 
@@ -59,19 +55,11 @@ def preprocess(train_features, test_features):
 
 
 def basic_cleaning(
-    train_feature_path,
-    train_labels_path,
-    test_feature_path,
+    train_features,
+    test_features,
     export=False,
     out_path=None,
 ):
-    train_features = pd.read_csv(train_feature_path)
-    train_labels = pd.read_csv(train_labels_path)
-    train_features = pd.merge(
-        train_features, train_labels, on=["city", "year", "weekofyear"]
-    )
-    test_features = pd.read_csv(test_feature_path)
-
     # convert kelvin to celsius
     train_features[
         [
