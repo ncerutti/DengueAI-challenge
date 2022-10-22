@@ -2,7 +2,7 @@ from turtle import setworldcoordinates
 from evaluation import evaluate
 from sklearn.model_selection import train_test_split
 
-def fit_predict_evaluate(pl,train_clean,test_clean,expname,crossval=False,create_submission=False):
+def fit_predict_evaluate(pl,train_clean,test_clean,test_features,expname,crossval=False,create_submission=False):
 
     y=train_clean['total_cases']
     X=train_clean.drop('total_cases', axis=1)
@@ -47,19 +47,34 @@ def fit_predict_evaluate(pl,train_clean,test_clean,expname,crossval=False,create
 
     #Create a submission
     if create_submission:
+        
         #retrain the model using the entire dataset:
         pl.fit(X_train, y_train)
 
+        fname=expname+'_submission'+'.csv'
+        export_submission(test_features, test_clean, fname, pl)
+
         #predict
-        test_clean['total_cases'] = pl.predict(test_clean)
-        test_clean['total_cases'] = test_clean['total_cases'].astype(int)
+        #test_clean['total_cases'] = pl.predict(test_clean)
+        #test_clean['total_cases'] = test_clean['total_cases'].astype(int)
 
         #adjust the format
-        submission=test_clean[['city', 'year', 'weekofyear', 'total_cases']]
-        submission['city']=submission['city'].map({1:'sj', 0:'iq'})
-        fname=expname+'_submission'+'.csv'
-        submission.to_csv(fname, index=False)
+        #submission=test_clean[['city', 'year', 'weekofyear', 'total_cases']]
+        #submission['city']=submission['city'].map({1:'sj', 0:'iq'})
+        #fname=expname+'_submission'+'.csv'
+        #submission.to_csv(fname, index=False)
         #print(submission.dtypes)
         print(f'saved submission file: {fname}')
         
     return scores
+
+
+def export_submission(test_clean, test_processed, out_path, pl):
+
+    test_clean['total_cases']=pl.predict(test_processed)
+    test_clean['total_cases']=test_clean['total_cases'].astype(int)
+    submission=test_clean[['city', 'year', 'weekofyear', 'total_cases']]
+    submission['city']=submission['city'].map({1:'sj', 0:'iq'})
+    submission.to_csv(out_path, index=False)
+
+    return submission
