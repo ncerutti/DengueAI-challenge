@@ -69,7 +69,7 @@ def main(options, expname):
         test_clean,
         test_features,
         expname=expname,
-        crossval=False,
+        crossval=True,
         create_submission=True,
     )
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "XGB",  #'RFR' #'DTR'
+        "model": "XGB" #"GBR" #"XGB" # "XGBRF" "GBR"  #'RFR' #'DTR'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()
