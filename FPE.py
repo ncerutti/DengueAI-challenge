@@ -67,20 +67,8 @@ def fit_predict_evaluate(
         pl.fit(X_train, y_train)
 
         fname = expname + "_submission" + ".csv"
-        export_submission(test_features, test_clean, fname, pl)
-
-        # predict
-        # test_clean['total_cases'] = pl.predict(test_clean)
-        # test_clean['total_cases'] = test_clean['total_cases'].astype(int)
-
-        # adjust the format
-        # submission=test_clean[['city', 'year', 'weekofyear', 'total_cases']]
-        # submission['city']=submission['city'].map({1:'sj', 0:'iq'})
-        # fname=expname+'_submission'+'.csv'
-        # submission.to_csv(fname, index=False)
-        # print(submission.dtypes)
+        submission = export_submission(test_features, test_clean, fname, pl)
         print(f"saved submission file: {fname}")
-
     return scores
 
 
@@ -89,7 +77,8 @@ def export_submission(test_clean, test_processed, out_path, pl):
     test_clean["total_cases"] = pl.predict(test_processed)
     test_clean["total_cases"] = test_clean["total_cases"].astype(int)
     submission = test_clean[["city", "year", "weekofyear", "total_cases"]]
-    submission["city"] = submission["city"].map({1: "sj", 0: "iq"})
+    #submission["city"] = submission["city"].map({1: "sj", 0: "iq"})
     submission.to_csv(out_path, index=False)
-
+    # print(submission.dtypes)
+    
     return submission
