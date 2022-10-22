@@ -2,25 +2,44 @@ from turtle import setworldcoordinates
 from evaluation import evaluate
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
 
 def fit_predict_evaluate(
     pl,
     train_clean,
     test_clean,
     test_features,
+    GSparameters,
     expname,
-    crossval=False,
+    operation= 'gridsearch', #'test' 'crossval', 'gridsearch'
     create_submission=False,
 ):
 
     y = train_clean["total_cases"]
     X = train_clean.drop("total_cases", axis=1)
 
-    if crossval:
+    if operation == 'gridsearch':
+        print("Performing a gridsearch")
+        X_train, X_test, y_train, y_test = train_test_split(
+                    X, y, random_state=42)
+        grid = GridSearchCV(pl, GSparameters, cv=5).fit(X_train, y_train)
+        print('Training set score: ' + str(grid.score(X_train, y_train)))
+        print('Test set score: ' + str(grid.score(X_test, y_test)))
+        best_params = grid.best_params_
+        print(f'Best model parameters:{best_params}') 
+        # Stores the optimum model in best_pipe
+        best_pipe = grid.best_estimator_
+        pl = best_pipe
+        #print(best_pipe)
+        print("Predicting and evaluating...")
+        y_test_predict = pl.predict(X_test)
+        scores = evaluate(y_test, y_test_predict, expname + 'gridsearched', visualize=True)
+
+    if operation == 'crossval':
         cycles=5
         scores = cross_val_score(pl, X, y, cv=cycles, scoring='neg_mean_absolute_error')
         print("Over %i cycles: MAE: %0.2f with std: %0.2f" % (cycles,-1*scores.mean(), -1*scores.std()))
-    else:
+    elif operation == 'test':
         # sub-train-test split of the train dataset
         #random_states = [42,43,44,45,46]
         random_states = [42]
@@ -57,7 +76,7 @@ def fit_predict_evaluate(
         for key in keys:
             scores[key] = scores[key] / len(scoresL)
 
-        if len(random_states>1):
+        if len(random_states) > 1:
             print(
                 f"Averaged scores over {len(random_states)} train-test splits:\n R2 = {scores['R2']} \n RMSE:{scores['RMSE']} \n MAE:{scores['MAE']}"
             )

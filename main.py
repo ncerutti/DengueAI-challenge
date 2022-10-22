@@ -52,7 +52,7 @@ def main(options, expname):
     #                                         features2eng=features)
 
     # Build the model
-    model = construct_model(opt=options["model"])
+    model,GSparameters = construct_model(opt=options["model"])
 
     # Build the entire pipeline
     pl = Pipeline(
@@ -68,8 +68,9 @@ def main(options, expname):
         train_clean,
         test_clean,
         test_features,
+        GSparameters,
         expname=expname,
-        crossval=False,
+        operation = 'gridsearch', #'test' 'crossval', 'gridsearch',
         create_submission=True,
     )
 
@@ -85,9 +86,9 @@ if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "XGB",  #'RFR' #'DTR'
+        "model": "GBR",  #'RFR' #'DTR'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()
-    # expname='test'
+    #expname='test'
     main(options, expname)
