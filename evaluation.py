@@ -12,13 +12,13 @@ def evaluate(y,yhat,figname='figure',visualize=True,):
     #Scatter plot y vs yhat
     ax[0].plot(y,yhat,'.')
     ax[0].plot([0,y.max()],[0,y.max()],'-')
-    ax[0].set(xlabel='True Sale Price', ylabel='Predicted Sale Price')
+    ax[0].set(xlabel='True Total Cases', ylabel='Predicted Total Cases')
     ax[0].text(0.1,0.75, 'RMSE:%5.2f\nR2:%5.2f\nMAE:%5.2f'%(RMSE,R2,MAE), transform=ax[0].transAxes)
     
     #TS plot
     ax[1].plot(range(0,len(y)),y,':b',label='true')
     ax[1].plot(range(0,len(y)),yhat,'-r',label='predicted')
-    ax[1].set(xlabel='Week',ylabel='Sale Price')
+    ax[1].set(xlabel='Week',ylabel='Total Cases')
     plt.legend()
 
     fig.savefig(figname + '.png')
