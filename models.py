@@ -6,7 +6,7 @@ from xgboost import XGBRFRegressor
 
 def construct_model(opt):
     if opt == "LR":
-        model = LinearRegression(random_state=420)
+        model = LinearRegression()
     elif opt == "DTR":
         model = DecisionTreeRegressor(random_state=420)
     elif opt == "RFR":
