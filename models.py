@@ -15,7 +15,7 @@ def construct_model(opt):
         )
     elif opt == "XGB":
         model = XGBRFRegressor(
-            n_estimators=10000,
+            n_estimators=1000,
             max_depth=22,
             eta=0.1,
             subsample=0.7,
