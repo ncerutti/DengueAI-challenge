@@ -14,7 +14,9 @@ def construct_model(opt):
         GSparameters=None
     elif opt == "RFR":
         model = RandomForestRegressor(
-            random_state=420, n_estimators=300, min_samples_split=125
+            random_state=420, 
+            n_estimators=150, #300, 
+            min_samples_split=15 #125
         )
         GSparameters = {
                          'model__n_estimators': [100,150,200],
@@ -34,11 +36,11 @@ def construct_model(opt):
                          'model__max_depth': [10, 15, 20],
                         }
     elif opt == "GBR":
-        model=GradientBoostingRegressor(loss="absolute_error", min_samples_split=100, n_estimators=1000, alpha=0.05)
+        model=GradientBoostingRegressor(loss="absolute_error", min_samples_split=50, n_estimators=1000, alpha=0.05)
         GSparameters =  {            
                          #'model__min_samples_split': [50,100,150],
-                         'model__n_estimators': [2000,3000,4000],
-                         'model__alpha':[0.03,0.05,0.07],
+                         'model__n_estimators': [10000,15000,20000],
+                         #'model__alpha':[0.03,0.05,0.07],
                         }
     else:
         raise (ValueError(f"model:{opt} option not defined"))
