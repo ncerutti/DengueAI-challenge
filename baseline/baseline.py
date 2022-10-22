@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import json
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.model_selection import train_test_split, ParameterGrid, GridSearchCV
 from sklearn.metrics import mean_absolute_error
+
 
 def basic_cleaning(train_feature_path, train_labels_path, test_feature_path, export=False, out_path=None):
     train_features=pd.read_csv(train_feature_path)
@@ -128,7 +129,9 @@ def export_submission(test_clean, test_processed, out_path, model):
     return submission
 
 
-cleaned=basic_cleaning('../data/dengue_features_train.csv', '../data/dengue_labels_train.csv','../data/dengue_features_test.csv' )
+cleaned=basic_cleaning('../data/dengue_features_train.csv',
+                       '../data/dengue_labels_train.csv',
+                       '../data/dengue_features_test.csv' )
 
 train_data=cleaned[0]
 test_data=cleaned[1].copy()
@@ -165,6 +168,7 @@ Y=train_data['total_cases']
 X=train_data.drop('total_cases', axis=1)
 
 
+
 '''
 X=cleaned[0]#.drop('total_cases', axis=1)
 Y=cleaned[0]['total_cases']
@@ -176,41 +180,25 @@ Y2=Y.copy()
 
 
 X_train,X_test,y_train,y_test=train_test_split(X,Y, random_state=42)
-rfr=RandomForestRegressor(random_state=420, min_samples_split=100)
 
-rfr.fit(X,Y)
-
-submission=export_submission(cleaned[1], test_data, 'submission3.csv', rfr)
 
 
 
 
 '''
+
+
+
+gboost=GradientBoostingRegressor(loss="absolute_error", min_samples_split=100, n_estimators=1000)
+gboost.fit(X_train, y_train)
+print(mean_absolute_error(y_test, gboost.predict(X_test)))
+submission=export_submission(cleaned[1], test_data, 'submission6.csv', gboost)
+
 rfr=RandomForestRegressor(random_state=420)
+
+X_train, X_test, y_train , y_test=train_test_split(X,Y, random_state=42)
+
+
 rfr.fit(X_train, y_train)
-
-X_train2, X_test2, y_train2 , y_test2=train_test_split(X2,Y2, random_state=42)
-
-rfr2=RandomForestRegressor(random_state=420)
-rfr2.fit(X_train2, y_train2)
-
-X_train3, X_test3, y_train3 , y_test3=train_test_split(X3,Y2, random_state=42)
-
-rfr3=RandomForestRegressor(random_state=420)
-rfr3.fit(X_train3, y_train3)
-
-X_train4, X_test4, y_train4 , y_test4=train_test_split(X4,Y2, random_state=42)
-
-rfr4=RandomForestRegressor(random_state=420)
-rfr4.fit(X_train4, y_train4)
-
-
-
-
-
 print(mean_absolute_error(y_test, rfr.predict(X_test)))
-print(mean_absolute_error(y_test2, rfr2.predict(X_test2)))
-print(mean_absolute_error(y_test3, rfr3.predict(X_test3)))
-print(mean_absolute_error(y_test4, rfr4.predict(X_test4)))
-
 '''
