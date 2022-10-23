@@ -95,10 +95,11 @@ The models, fitted hyperparameters (if available) and the GridSearch parameters 
 
 After an iterative search for best parameters using GridSearchCV function of sklearn (see **FPE.py**), 
 the sub-test (test split of the train data) results did really look promising. The spikes, which is arguably the most critical characteristic,  
-are not at all reproduced, and especially the R2 is quite poor:
+are not at all reproduced as can be seen in the pseudo-time series plot (it shows the total-cases in each row of the
+test-split of the train data, with the two cities appended each other). As a result, R2 and RMSE metrics are quite poor:
 ![Results obtained with GBR](results/20221022-140454_GBR.png)
 
-However, when this model is applied to the test data, and results (submission.csv) is submitted to the competition,
+However, when this model is applied to the test data, and results file (submission.csv) is submitted to the competition,
 it got a mean absolute error (MAE, which is the chosen metric by the competition) of 24.6106, us into 897th position, 
 which is about 8% of the total number of competitors (about 12K) at this time:
 ![Competition Score with GBR](results/20221022-140454_GBR_DDscore.png).
