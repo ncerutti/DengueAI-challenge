@@ -86,7 +86,7 @@ if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "RFR",  #'GBR','RFR', 'DTR'
+        "model": "XGB",  #'XGBRF','GBR','RFR', 'DTR'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()

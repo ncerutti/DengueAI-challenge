@@ -5,6 +5,8 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import MinMaxScaler
 
 
 def preprocess(train_features, test_features):
@@ -21,37 +23,23 @@ def preprocess(train_features, test_features):
     test_data = add_temp_dew(test_data)
     test_data = add_lag_cols(test_data)
 
-    train_data.drop(
-        [
-            "reanalysis_tdtr_k",
-            "reanalysis_min_air_temp_k",
-            "reanalysis_max_air_temp_k",
-            "reanalysis_avg_temp_k",
-            "reanalysis_air_temp_k",
-            "year",
-        ],
-        axis=1,
-        inplace=True,
-    )
+    # trainnames = train_data.columns
+    # testnames = test_data.columns
 
-    test_data.drop(
-        [
-            "reanalysis_tdtr_k",
-            "reanalysis_min_air_temp_k",
-            "reanalysis_max_air_temp_k",
-            "reanalysis_avg_temp_k",
-            "reanalysis_air_temp_k",
-            "year",
-        ],
-        axis=1,
-        inplace=True,
-    )
+    
+
+    ### In theory, pass a list of lists to PCA
+    ### PCAING TRAIN
 
     train_data.to_csv("train_processed.csv", index=False)
     test_data.to_csv("test_processed.csv", index=False)
     # Y=train_data['total_cases']
     # X=train_data.drop('total_cases', axis=1)
+
+
+
     return train_data, test_data
+
 
 
 def basic_cleaning(
@@ -371,6 +359,8 @@ def preprocess_old(train_features, test_features):
     for i in test_clean.columns:
         test_clean[i] = test_clean[i].interpolate()
 
+
+
     return train_clean, test_clean
 
 
@@ -385,3 +375,88 @@ def get_features(opt):
         raise (ValueError(f"features:{opt} option not defined"))
 
     return features
+
+
+
+    # topca = train_data[
+    #     [
+    #         "reanalysis_air_temp_k",
+    #         "reanalysis_avg_temp_k",
+    #         "reanalysis_dew_point_temp_k",
+    #         "reanalysis_max_air_temp_k",
+    #         "reanalysis_min_air_temp_k",
+    #         "reanalysis_tdtr_k",
+    #     ]
+    # ]
+
+    # topca = (topca - topca.mean()) / topca.std()
+    # pcathem = PCA(0.90)
+    # pcathem.fit(topca)
+    # topca = pd.DataFrame(pcathem.transform(topca))
+
+    # topca2 = train_data[["ndvi_ne", "ndvi_sw", "ndvi_nw", "ndvi_se"]]
+    # topca2 = (topca - topca.mean()) / topca.std()
+    # pcathem = PCA(0.90)
+    # pcathem.fit(topca)
+    # topca2 = pd.DataFrame(pcathem.transform(topca2))
+
+    # train_data.drop(
+    #     [
+    #         "reanalysis_tdtr_k",
+    #         "reanalysis_min_air_temp_k",
+    #         "reanalysis_max_air_temp_k",
+    #         "reanalysis_avg_temp_k",
+    #         "reanalysis_air_temp_k",
+    #         "year",
+    #         "ndvi_ne",
+    #         "ndvi_sw",
+    #         "ndvi_nw",
+    #         "ndvi_se",
+    #     ],
+    #     axis=1,
+    #     inplace=True,
+    # )
+
+    # pd.concat([train_data, topca, topca2])
+
+    # ### PCAING TEST
+
+    # topca = test_data[
+    #     [
+    #         "reanalysis_air_temp_k",
+    #         "reanalysis_avg_temp_k",
+    #         "reanalysis_dew_point_temp_k",
+    #         "reanalysis_max_air_temp_k",
+    #         "reanalysis_min_air_temp_k",
+    #         "reanalysis_tdtr_k",
+    #     ]
+    # ]
+    # topca = (topca - topca.mean()) / topca.std()
+    # pcathem = PCA(0.90)
+    # pcathem.fit(topca)
+    # topca = pd.DataFrame(pcathem.transform(topca))
+
+    # topca2 = test_data[["ndvi_ne", "ndvi_sw", "ndvi_nw", "ndvi_se"]]
+    # topca2 = (topca - topca.mean()) / topca.std()
+    # pcathem = PCA(0.90)
+    # pcathem.fit(topca)
+    # topca2 = pd.DataFrame(pcathem.transform(topca2))
+
+    # test_data.drop(
+    #     [
+    #         "reanalysis_tdtr_k",
+    #         "reanalysis_min_air_temp_k",
+    #         "reanalysis_max_air_temp_k",
+    #         "reanalysis_avg_temp_k",
+    #         "reanalysis_air_temp_k",
+    #         "year",
+    #         "ndvi_ne",
+    #         "ndvi_sw",
+    #         "ndvi_nw",
+    #         "ndvi_se",
+    #     ],
+    #     axis=1,
+    #     inplace=True,
+    # )
+
+    # pd.concat([test_data, topca, topca2])
