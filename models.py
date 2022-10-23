@@ -1,7 +1,6 @@
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRFRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from xgboost import XGBRegressor,XGBRFRegressor
 
@@ -38,28 +37,37 @@ def construct_model(opt):
                         }	    
     elif opt == "XGB":
         model = XGBRegressor(
-            n_estimators=10000,
-            max_depth=12,
-            eta=0.2,
+            n_estimators=4000,
+            max_depth=5,
+            eta=0.03,
             subsample=0.75,
             colsample_bytree=0.75,
             colsample_bylevel=0.75,
             colsample_bynode=0.75,
             random_state=43
         )
-        GSparameters = None
+        GSparameters = {
+                         #'model__n_estimators': [2500, 3000, 4000],
+                         #'model__max_depth': [3,5,7],
+                         #'model__eta':[0.01,0.03,0.05],
+                        }
     elif opt == "XGBRF":
         model = XGBRFRegressor(
-            n_estimators=10000,
-            max_depth=9,
-            eta=0.3,
-            subsample=0.7,
-            colsample_bytree=0.7,
-            colsample_bylevel=0.7,
-            colsample_bynode=0.7,
+            n_estimators=2000,
+            max_depth=18,
+            eta=0.015,
+            subsample=0.75,
+            colsample_bytree=0.75,
+            colsample_bylevel=0.75,
+            colsample_bynode=0.75,
             random_state=420
         )
-        GSparameters = None
+        GSparameters = {
+                         #'model__n_estimators': [1000, 2000, 3000],
+                         #'model__max_depth': [17,18,20],
+                         'model__eta':[0.01, 0.015, 0.02],
+                         #'model__subsample': [0.65,0.7,0.75]
+                        }
     else:
         raise (ValueError(f"model:{opt} option not defined"))
 
