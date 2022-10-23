@@ -36,7 +36,7 @@ def construct_model(opt):
                          'model__max_depth': [10, 15, 20],
                         }
     elif opt == "GBR":
-        model=GradientBoostingRegressor(loss="absolute_error", min_samples_split=50, n_estimators=1000, alpha=0.05)
+        model=GradientBoostingRegressor(loss="absolute_error", min_samples_split=50, n_estimators=20000, alpha=0.05)
         GSparameters =  {            
                          #'model__min_samples_split': [50,100,150],
                          'model__n_estimators': [10000,15000,20000],

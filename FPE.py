@@ -22,7 +22,7 @@ def fit_predict_evaluate(
         print("Performing a gridsearch")
         X_train, X_test, y_train, y_test = train_test_split(
                     X, y, random_state=42)
-        grid = GridSearchCV(pl, GSparameters, cv=5).fit(X_train, y_train)
+        grid = GridSearchCV(pl, GSparameters, cv=5, n_jobs=-1).fit(X_train, y_train)
         print('Training set score: ' + str(grid.score(X_train, y_train)))
         print('Test set score: ' + str(grid.score(X_test, y_test)))
         best_params = grid.best_params_
