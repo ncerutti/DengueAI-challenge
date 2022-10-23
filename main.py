@@ -78,15 +78,13 @@ def main(options, expname):
     with open(expname + ".pickle", "wb") as handle:
         pickle.dump((scores, options), handle, protocol=pickle.HIGHEST_PROTOCOL)
     print(f"Saved the scores and options in: {expname}.pickle/png")
-
     return
-
 
 if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "XGB",  #'XGBRF','GBR','RFR', 'DTR'
+        "model": "XGB",  #'XGBRF','XGB','GBR','RFR', 'DTR'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()
