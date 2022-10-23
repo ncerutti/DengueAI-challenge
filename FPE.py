@@ -39,14 +39,17 @@ def fit_predict_evaluate(
 
     if operation == 'crossval':
         cycles=5
+        print(f"Performing cross-validation over {cycles} cycles")
         scores = cross_val_score(pl, X, y, cv=cycles, scoring='neg_mean_absolute_error')
         print("Over %i cycles: MAE: %0.2f with std: %0.2f" % (cycles,-1*scores.mean(), -1*scores.std()))
     elif operation == 'test':
         # sub-train-test split of the train dataset
         #random_states = [42,43,44,45,46]
-        random_states = [42]
-
+        cycles=1   
+        random_state0 = 42
+        print(f"Performing test runs over {cycles} different random_states")
         # cycle through different random states
+        random_states = [random_state0+i for i in range(cycles) ]
         scoresL = []
         for i, random_state in enumerate(random_states):
             print(f"Fit-predict cycle:{i}")
