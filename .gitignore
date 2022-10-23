@@ -1,5 +1,5 @@
 *.pyc
 *.pickle
 *.png
-*/submission.csv
+*/*_submission.csv
 */baseline_ignore.py
