@@ -5,7 +5,7 @@ This is a machine learning project aimed to solve the 'DengAI: Predicting Diseas
 
 The aim is to predict the *total_cases* (weekly total disease cases) in San Juan (Brazil) and Iquitos (Peru).
 In this readme, we will describe the data, what's been done as for data preprocessing and feature engineering,
-two ML models we tried, the DD scores we obtained, and some discussion about these results.
+and two of the  models we tried, results and the DD scores we obtained, and some discussion about these results.
 
 ## Data
 
@@ -90,6 +90,14 @@ After the preprocessing (see **feature_eng.py**), this is how the features looke
 
 ## Model
 The models, fitted hyperparameters (if available) and the GridSearch parameters can be found in **models.py**.
+At this stage, following models are defined:
+- sklearn.linear_model.LinearRegression
+- sklearn.tree.DecisionTreeRegressor
+- sklearn.ensemble.RandomForestRegressor
+- sklearn.ensemble.GradientBoostingRegressor
+- xgboost.XGBRegressor,XGBRFRegressor
+
+In the following, we report the results obtained by Gradient Boosting Regression and Random Forest Regression.
 
 ### Gradient Boosting Regression (GBR)
 
