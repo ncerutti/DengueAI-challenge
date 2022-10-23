@@ -1,13 +1,6 @@
 import pandas as pd
 import numpy as np
 import json
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import MinMaxScaler
-
 
 def preprocess(train_features, test_features):
 
