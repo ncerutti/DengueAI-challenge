@@ -56,17 +56,17 @@ def construct_model(opt):
             n_estimators=2000,
             max_depth=18,
             eta=0.015,
-            subsample=0.75,
-            colsample_bytree=0.75,
-            colsample_bylevel=0.75,
-            colsample_bynode=0.75,
+            subsample=0.78,
+            #colsample_bytree=0.75,
+            #colsample_bylevel=0.75,
+            #colsample_bynode=0.75,
             random_state=420
         )
         GSparameters = {
                          #'model__n_estimators': [1000, 2000, 3000],
                          #'model__max_depth': [17,18,20],
-                         'model__eta':[0.01, 0.015, 0.02],
-                         #'model__subsample': [0.65,0.7,0.75]
+                         #'model__eta':[0.01, 0.015, 0.02],
+                         'model__subsample': [0.75,0.78,0.80]
                         }
     else:
         raise (ValueError(f"model:{opt} option not defined"))

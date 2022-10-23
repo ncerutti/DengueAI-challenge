@@ -70,7 +70,7 @@ def main(options, expname):
         test_features,
         GSparameters,
         expname=expname,
-        operation = 'test', #'test' 'crossval', 'gridsearch',
+        operation = 'test', #'test' 'crossval', 'gridsearch'
         create_submission=True,
     )
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "XGB",  #'XGBRF','XGB','GBR','RFR', 'DTR'
+        "model": "XGBRF",  #'XGBRF','XGB','GBR','RFR', 'DTR'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()
