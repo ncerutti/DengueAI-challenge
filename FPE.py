@@ -19,6 +19,8 @@ def fit_predict_evaluate(
     X = train_clean.drop("total_cases", axis=1)
 
     if operation == 'gridsearch':
+        if GSparameters is None:
+            raise(ValueError('GSparameters is not defined (models.py) for the chosen model.'))
         print("Performing a gridsearch")
         X_train, X_test, y_train, y_test = train_test_split(
                     X, y, random_state=42)
