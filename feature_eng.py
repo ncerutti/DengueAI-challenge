@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 
+
 def preprocess(train_features, test_features):
 
     cleaned = basic_cleaning(train_features, test_features)
@@ -19,8 +20,6 @@ def preprocess(train_features, test_features):
     # trainnames = train_data.columns
     # testnames = test_data.columns
 
-    
-
     ### In theory, pass a list of lists to PCA
     ### PCAING TRAIN
 
@@ -29,10 +28,17 @@ def preprocess(train_features, test_features):
     # Y=train_data['total_cases']
     # X=train_data.drop('total_cases', axis=1)
 
-
-
     return train_data, test_data
 
+
+# Create a function that normalizes certain columns in the training and it also normalizes the columns in the test data based on mean and standard deviation in the training data
+def normalize_cols(train_data, test_data, cols_to_normalize):
+    for col in cols_to_normalize:
+        mean = train_data[col].mean()
+        std = train_data[col].std()
+        train_data[col] = (train_data[col] - mean) / std
+        test_data[col] = (test_data[col] - mean) / std
+    return train_data, test_data
 
 
 def basic_cleaning(
@@ -352,8 +358,6 @@ def preprocess_old(train_features, test_features):
     for i in test_clean.columns:
         test_clean[i] = test_clean[i].interpolate()
 
-
-
     return train_clean, test_clean
 
 
@@ -368,8 +372,6 @@ def get_features(opt):
         raise (ValueError(f"features:{opt} option not defined"))
 
     return features
-
-
 
     # topca = train_data[
     #     [
