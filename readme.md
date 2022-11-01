@@ -129,3 +129,5 @@ but the MAE is not good in penalizing the models that do not capture these event
 An alternative explanation is that the test data does not exhibit similar behavior observed in the train data.
 A final possibility is that our RFR model is somehow overfitted, but we do not capture this with our chosen 
 train-test splits.
+
+> Note: LightGBM has an option for Poisson regression (which should be more appropriate given the data). Neither LightGBM nor XGBoost provide an implementation for binomial.
