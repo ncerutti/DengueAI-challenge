@@ -1,11 +1,11 @@
 # General Intro
 
-This is a machine learning project aimed to solve the 'DengAI: Predicting Disease Spread' competition at DrivenData 
+This is a machine learning project aimed at solving the 'DengAI: Predicting Disease Spread' competition at DrivenData 
 (see: https://www.drivendata.org/competitions/44/dengai-predicting-disease-spread/page/82/).
 
 The aim is to predict the *total_cases* (weekly total disease cases) in San Juan (Brazil) and Iquitos (Peru).
-In this readme, we will describe the data, what's been done as for data preprocessing and feature engineering,
-and two of the  models we tried, results and the DD scores we obtained, and some discussion about these results.
+In this readme, we will describe the data, what has been done so far for data preprocessing and feature engineering,
+two of the models we tried, the results and DD scores we obtained, followed by some discussion about these results and their implications.
 
 ## Data
 
@@ -101,33 +101,31 @@ In the following, we report the results obtained by Gradient Boosting Regression
 
 ### Gradient Boosting Regression (GBR)
 
-After an iterative search for best parameters using GridSearchCV function of sklearn (see **FPE.py**), 
-the sub-test (test split of the train data) results did really look promising. The spikes, which is arguably the most critical characteristic,  
-are not at all reproduced as can be seen in the pseudo-time series plot (it shows the total-cases in each row of the
-test-split of the train data, with the two cities appended each other). As a result, R2 and RMSE metrics are quite poor:
+After an iterative search for best parameters using the GridSearchCV function of sklearn (see **FPE.py**), 
+the sub-test (test split of the train data) results did look really promising. The spikes, which is arguably the most critical characteristic, 
+are not at all captured, as can be seen in the pseudo-time series plot (it shows the total cases in each row of the
+test-split of the train data, with the two cities appended to each other). As a result, R2 and RMSE metrics are quite poor:
 ![Results obtained with GBR](results/20221022-140454_GBR.png)
 
-However, when this model is applied to the test data, and results file (submission.csv) is submitted to the competition,
-it got a mean absolute error (MAE, which is the chosen metric by the competition) of 24.6106, us into 897th position, 
-which is about 8% of the total number of competitors (about 12K) at this time:
+However, when this model is applied to the test data by submitting the results file (submission.csv) to the competition,
+it got a mean absolute error (MAE, which is the chosen metric by the competition) of 24.6106, propelling us us into 897th position, 
+in the top 8% of the total number of competitors (about 12K) at the current time:
 ![Competition Score with GBR](results/20221022-140454_GBR_DDscore.png).
 
 ### Random Forest Regression (RFR)
 
-After a similarly iterative search for the best parameters using GridSearchCV using the Random Forest Regression model,
+After a similar iterative search for the best parameters using GridSearchCV using the Random Forest Regression model,
 we obtained relatively better looking results, when applied to the sub test, with a clearly higher R2, and better
-skill to capture the spikes:
+ability to predict the spike corresponding to a sever outbreak of Dengue:
 ![Results obtained with RFR](results/20221022-143027_RFR.png)
 
-Interestingly, the submission we generated with this model received a much lower score:
+Interestingly, the submission file generated with this model returned a much lower score:
 ![Competition Score with RFR](results/20221022-143027_RFR_DDscore.png)
 
-## Conclusion
-Based on these results, it can be said that the metric for the competition is chosen poorly: 
-arguably what matters most is the ability of models to capture the large spikes, 
-but the MAE is not good in penalizing the models that do not capture these events.
-An alternative explanation is that the test data does not exhibit similar behavior observed in the train data.
-A final possibility is that our RFR model is somehow overfitted, but we do not capture this with our chosen 
-train-test splits.
+## Discussion
+Based on these results, there are a few observations to be made. Perhaps, the metric for the competition has been poorly chosen: 
+arguably what matters most is the ability of models to capture the large spikes, but the MAE is not good in penalizing models unable to capture these events.
+It is equally possible that the test data does not exhibit the same behavior observed in the train data, be it for reasons present in the dataset (e.g., interactions between variables that we did not consider) or absent from it. In the latter case, predicting the spikes might be counterproductive in terms of score and we could remove them from the training data.
+A final possibility is that our RFR model is somehow overfitted, although we do not capture this with our chosen train-test splits.
 
 > Note: LightGBM has an option for Poisson regression (which should be more appropriate given the data). Neither LightGBM nor XGBoost provide an implementation for binomial.
