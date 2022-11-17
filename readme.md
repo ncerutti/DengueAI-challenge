@@ -128,4 +128,4 @@ arguably what matters most is the ability of models to capture the large spikes,
 It is equally possible that the test data does not exhibit the same behavior observed in the train data, be it for reasons present in the dataset (e.g., interactions between variables that we did not consider) or absent from it. In the latter case, predicting the spikes might be counterproductive in terms of score and we could remove them from the training data.
 A final possibility is that our RFR model is somehow overfitted, although we do not capture this with our chosen train-test splits.
 
-> Note: LightGBM has an option for Poisson regression (which should be more appropriate given the data). Neither LightGBM nor XGBoost provide an implementation for binomial.
+> Note: LightGBM has an option for Poisson regression (which should be more appropriate given the data). Neither LightGBM nor XGBoost provide an implementation for binomial. Interesting to see how something like Prophet and/or ETSformer would perform, as a next step.
