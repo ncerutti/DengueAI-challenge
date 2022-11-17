@@ -110,16 +110,18 @@ test-split of the train data, with the two cities appended to each other). As a 
 However, when this model is applied to the test data by submitting the results file (submission.csv) to the competition,
 it got a mean absolute error (MAE, which is the chosen metric by the competition) of 24.6106, propelling us us into 897th position, 
 in the top 8% of the total number of competitors (about 12K) at the current time:
+
 ![Competition Score with GBR](results/20221022-140454_GBR_DDscore.png).
 
 ### Random Forest Regression (RFR)
 
 After a similar iterative search for the best parameters using GridSearchCV using the Random Forest Regression model,
 we obtained relatively better looking results, when applied to the sub test, with a clearly higher R2, and better
-ability to predict the spike corresponding to a sever outbreak of Dengue:
+ability to predict the spike corresponding to a severe outbreak of Dengue:
 ![Results obtained with RFR](results/20221022-143027_RFR.png)
 
 Interestingly, the submission file generated with this model returned a much lower score:
+
 ![Competition Score with RFR](results/20221022-143027_RFR_DDscore.png)
 
 ## Discussion
