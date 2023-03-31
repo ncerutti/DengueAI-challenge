@@ -3,3 +3,5 @@
 *.png
 */*_submission.csv
 */baseline_ignore.py
+test_processed.csv
+train_processed.csv

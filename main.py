@@ -25,7 +25,7 @@ def main(options, expname):
     """
     Main function of the Dengue project.
 
-    Args: 
+    Args:
     options: a dictionary containing options for features, preprocessing, model
         Example:
         options = {'features': 'AvgTemp_Prec', 'preprocessing': 'median', 'model': 'LR'}
@@ -52,7 +52,7 @@ def main(options, expname):
     #                                         features2eng=features)
 
     # Build the model
-    model,GSparameters = construct_model(opt=options["model"])
+    model, GSparameters = construct_model(opt=options["model"])
 
     # Build the entire pipeline
     pl = Pipeline(
@@ -70,7 +70,7 @@ def main(options, expname):
         test_features,
         GSparameters,
         expname=expname,
-        operation = 'test', #'test' 'crossval', 'gridsearch'
+        operation="test",  #'test' 'crossval', 'gridsearch'
         create_submission=True,
     )
 
@@ -80,13 +80,14 @@ def main(options, expname):
     print(f"Saved the scores and options in: {expname}.pickle/png")
     return
 
+
 if __name__ == "__main__":
     options = {  #'features': 'AvgTemp_Prec_NDVI',
         "features": "AvgTemp_Prec",
         "preprocessing": {"num": "median", "FE": "addlags"},
-        "model": "XGBRF",  #'XGBRF','XGB','GBR','RFR', 'DTR'
+        "model": "LGBM",  #'XGBRF','XGB','GBR','RFR', 'DTR', 'LGBM'
     }
     # construct an experiment name based on current date time
     expname = get_expname_datetime()
-    #expname='test'
+    # expname='test'
     main(options, expname)
