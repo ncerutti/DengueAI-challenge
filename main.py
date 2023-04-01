@@ -20,7 +20,6 @@ from models import construct_model
 from FPE import fit_predict_evaluate
 from utilities import get_expname_datetime
 
-
 def main(options, expname):
     """
     Main function of the Dengue project.
